@@ -17,6 +17,10 @@ public class Menu : MonoBehaviourPunCallbacks, ILobbyCallbacks
     [Header("Main Screen")]
     public Button createRoomButton;
     public Button findRoomButton;
+    public TMP_InputField playerNameInputField;
+
+    [Header("Create Room Screen")]
+    public TMP_InputField roomNameInputField;
 
     [Header("Lobby")]
     public TextMeshProUGUI playerListText;
@@ -34,11 +38,16 @@ public class Menu : MonoBehaviourPunCallbacks, ILobbyCallbacks
     {
         createRoomButton.interactable = false;
         findRoomButton.interactable = false;
+        playerNameInputField.text = "";
+        roomNameInputField.text = "";
 
         Cursor.lockState = CursorLockMode.None;
 
         if(PhotonNetwork.InRoom)
         {
+            SetScreen(lobbyScreen);
+            UpdateLobbyUI();
+            
             PhotonNetwork.CurrentRoom.IsVisible = true;
             PhotonNetwork.CurrentRoom.IsOpen = true;
         }
